@@ -10,7 +10,7 @@ services:
       - ${HOST_RESTAPI_PORT:-8998}:8080
 
     environment:
-      - OPENAS2PROP_RESTAPI__COMMAND__PROCESSOR__BASEURI=http://0.0.0.0:8999
+      - OPENAS2PROP_RESTAPI__COMMAND__PROCESSOR__BASEURI=http://0.0.0.0:8080
       - OPENAS2PROP_RESTAPI__COMMAND__PROCESSOR__USERID=edidsa
       - OPENAS2PROP_RESTAPI__COMMAND__PROCESSOR__PASSWORD=9210Octopus
       - OPENAS2PROP_RESTAPI__COMMAND__PROCESSOR__ENABLED=true
@@ -33,7 +33,7 @@ services:
       context: .
       dockerfile: Dockerfile_WebUI
       args:
-        - VUE_APP_RESTAPI_URL=http://127.0.0.1:8998/api
+        - VUE_APP_RESTAPI_URL=http://144.202.125.163:8998/api
     ports:
       - ${HOST_WEBUI_PORT:-8999}:80
     tty: true
