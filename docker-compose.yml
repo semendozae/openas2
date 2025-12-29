@@ -3,30 +3,39 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    expose:
+      - 10080
+      - 10081
     ports:
-      - 4080:10080
-      - 4081:10081
-      - ${HOST_RESTAPI_PORT:-8443}:8080
+      - ${HOST_RESTAPI_PORT:-8998}:8080
+
     environment:
-      - OPENAS2PROP_RESTAPI__COMMAND__PROCESSOR__BASEURI=http://0.0.0.0:8080
-      - OPENAS2PROP_RESTAPI__COMMAND__PROCESSOR__USERID=userID
-      - OPENAS2PROP_RESTAPI__COMMAND__PROCESSOR__PASSWORD=pWd
+      - OPENAS2PROP_RESTAPI__COMMAND__PROCESSOR__BASEURI=http://0.0.0.0:8999
+      - OPENAS2PROP_RESTAPI__COMMAND__PROCESSOR__USERID=edidsa
+      - OPENAS2PROP_RESTAPI__COMMAND__PROCESSOR__PASSWORD=9210Octopus
       - OPENAS2PROP_RESTAPI__COMMAND__PROCESSOR__ENABLED=true
     tty: true
     stdin_open: true
     volumes:
       - ./config:/opt/openas2/config:rw
       - ./data:/opt/openas2/data:rw
+      - ./logs:/opt/openas2/logs:rw
 
+  proxy:
+    image: nginx:alpine
+    ports:
+      - "8001-8200:8001-8200"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
 
   openas2_webui:
     build:
       context: .
       dockerfile: Dockerfile_WebUI
       args:
-        - VUE_APP_RESTAPI_URL=http://127.0.0.1:8443/api
+        - VUE_APP_RESTAPI_URL=http://127.0.0.1:8998/api
     ports:
-      - ${HOST_WEBUI_PORT:-8080}:80
+      - ${HOST_WEBUI_PORT:-8999}:80
     tty: true
     stdin_open: true
 volumes:

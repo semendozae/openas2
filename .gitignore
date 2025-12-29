@@ -2,6 +2,9 @@
 /classes/
 /tests/
 /lib/
+/config/
+/data/
+/logs/
 *.iml
 .idea/*
 .project
@@ -17,3 +20,4 @@ pom.xml.versionsBackup
 **/.settings
 **/*.class
 .metadata/*
+nginx.conf
